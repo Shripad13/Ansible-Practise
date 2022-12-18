@@ -1,0 +1,24 @@
+web01 ansible_host=172.31.95.127 ansible_user=centos ansible_ssh_private_key_file=vprofile-key.pem  #defining variables at host level
+web02 ansible_host=172.31.92.205 ansible_user=centos ansible_ssh_private_key_file=vprofile-key.pem
+db01 ansible_host=172.31.90.11 ansible_user=centos ansible_ssh_private_key_file=vprofile-key.pem
+
+
+[websrvgrp]    #groupname
+web01
+web02
+
+
+[dbsrvgrp]      #groupname
+db01
+
+
+
+[dc_ohio:children]      #groups of groupname OR parentgroup name
+
+websrvgrp
+dbsrvgrp
+
+
+[dc_ohio:vars]         #defining variables at parent level
+ansible_user=centos
+ansible_ssh_private_key_file=vprofile-key.pem

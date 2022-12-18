@@ -1,0 +1,34 @@
+---
+
+- name: Setup Webserver             #playname2
+  hosts: websrvgrp                  #hostname  
+  become: yes                       #for sudo permission 
+  tasks: 
+   - name: Install Apache httpd     #taskname1
+     yum:
+        name: httpd
+        state: present
+   - name: Start & Enable HTTPD     #taskname2
+     service: 
+       name: httpd
+       state: started
+       enabled: yes
+   - name: Deploy Web File          #taskname3
+     copy:
+       src: index.html
+       dest: /var/www/html/index.html   
+      
+- name: Setup DBserver              #playname1
+  hosts: dbsrvgrp                   #hostname
+  become: yes
+  tasks:
+   - name: Install MySQL server     #taskname1
+     yum:
+        name: mariadb-server
+        state: present
+   - name: Start & Enable mariadb service     #taskname2
+     service:
+       name: mariadb
+       state: started
+       enabled: yes
+
